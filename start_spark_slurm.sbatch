@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# mkdir /work/cascades/karimy/spark/logs/%j
+# mkdir /work/tinkerfliffs/ritvikp/spark/logs/%j
 #SBATCH --nodes=3
 #  ntasks per node MUST be one, because multiple slaves per work doesn't
 #  work well with slurm + spark in this script (they would need increasing 
@@ -9,13 +9,13 @@
 #SBATCH --cpus-per-task=24
 #  Beware! $HOME will not be expanded and invalid paths will result Slurm jobs
 #  hanging indefinitely with status CG (completing) when calling scancel!
-#SBATCH --output="/work/dragonstooth/karimy/spark/logs/%j.out"
-#SBATCH --error="/work/dragonstooth/karimy/spark/logs/%j.err"
+#SBATCH --output="/work/tinkerfliffs/ritvikp/spark/logs/%j.out"
+#SBATCH --error="/work/tinkerfliffs/ritvikp/spark/logs/%j.err"
 #SBATCH --time=02:00:00
 #SBATCH --exclusive
 #SBATCH -A hpcbigdata2
 
-# KARIM SECOND TRIAL
+# RITVIK FIRST TRIAL
 # ulimit -m 31100000
 
 # This section will be run when started by sbatch
@@ -26,18 +26,18 @@ if [ "$1" != 'srunning' ]; then
     #   No such file or directory
     # that's why this script is being copied to a shared location to which 
     # all nodes have access to:
-    script=/home/karimy/${SLURM_JOBID}_$(basename "$0")
+    script=/home/ritvikp/${SLURM_JOBID}_$(basename "$0")
     cp "$this" "$script"
 
     # This might not be necessary on all clusters
     # module load Spark/2.2.0-Hadoop-2.6-Java-1.8.0_144
     module load jdk
 
-    export sparkLogs=/home/karimy/spark/logs/%j
-    export sparkTmp=/home/karimy/spark/tmp/%j
+    export sparkLogs=/home/ritvikp/spark/logs/%j
+    export sparkTmp=/home/ritvikp/spark/tmp/%j
     mkdir -p "$sparkLogs" "$sparkTmp"
 
-    export SPARK_ROOT=/home/karimy/spark-2.2.0-bin-hadoop2.6
+    export SPARK_ROOT=/projects/synergy_lab/ritvik/Voltron/Dependencies/spark-2.2.0-bin-hadoop2.6
     export SPARK_HOME=$SPARK_ROOT
     export SPARK_WORKER_DIR=$sparkLogs
     export SPARK_LOCAL_DIRS=$sparkLogs
